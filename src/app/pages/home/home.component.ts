@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, of, Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { FormattedData } from 'src/app/core/models/FormattedData';
 import { Olympic } from 'src/app/core/models/Olympic';
@@ -9,8 +9,10 @@ import { Olympic } from 'src/app/core/models/Olympic';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  public olympics$: Observable<any> = of(null);
+export class HomeComponent implements OnInit,OnDestroy {
+  public olympics$: Observable<Olympic[]> = of([]);
+
+  subscription!: Subscription;
 
   view: [number, number] = [700, 400];
   results: FormattedData[] = [];
@@ -29,7 +31,7 @@ export class HomeComponent implements OnInit {
     
     this.olympics$ = this.olympicService.getOlympics();
 
-    this.olympics$.subscribe((data) => {
+    this.subscription = this.olympics$.subscribe((data) => {
       
       if (data) {
         
@@ -38,6 +40,11 @@ export class HomeComponent implements OnInit {
         this.numberOfJOs = data[0].participations.length;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    
+    this.subscription.unsubscribe();
   }
 
   formatData(data: Olympic[]) {
