@@ -3,13 +3,14 @@ import { Observable, of, Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { FormattedData } from 'src/app/core/models/FormattedData';
 import { Olympic } from 'src/app/core/models/Olympic';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit,OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
   public olympics$: Observable<Olympic[]> = of([]);
 
   subscription!: Subscription;
@@ -22,10 +23,11 @@ export class HomeComponent implements OnInit,OnDestroy {
   isDoughnut: boolean = false;
   trimLabels: boolean = false;
 
+  rawData!: Olympic[];
   numberOfCountries!: number;
   numberOfJOs!: number;
 
-  constructor(private olympicService: OlympicService) {}
+  constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
     
@@ -36,8 +38,23 @@ export class HomeComponent implements OnInit,OnDestroy {
       if (data) {
         
         this.results = this.formatData(data);
+        this.rawData = data;
         this.numberOfCountries = data.length;
-        this.numberOfJOs = data[0].participations.length;
+
+        let JOs: number[] = [];
+
+        data.forEach((country) => {
+
+          country.participations.forEach((participation) => {
+
+            if (!JOs.includes(participation.year)) {
+
+              JOs.push(participation.year);
+            }
+          })
+        })
+
+        this.numberOfJOs = JOs.length;
       }
     });
   }
@@ -69,7 +86,10 @@ export class HomeComponent implements OnInit,OnDestroy {
     return formattedData;
   }
 
-  onSelect(name: string): void {
+  onSelect(event: FormattedData): void {
 
+    const countrySelected = this.rawData.find((country) => country.country === event.name)
+
+    this.router.navigate(['/country', countrySelected?.id])
   }
 }
