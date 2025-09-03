@@ -1,1 +1,30 @@
-<p>detail works!</p>
+<div class="detail">
+    <h1 class="detail-title">Medals per Country</h1>
+    <div class="detail-stats">
+        <div class="detail-stats-element">
+            <h2>Number of Entries</h2>
+            <p>{{ numberOfEntries }}</p>
+        </div>
+        <div class="detail-stats-element">
+            <h2>Total number medals</h2>
+            <p>{{ totalNumberMedals }}</p>
+        </div>
+        <div class="detail-stats-element">
+            <h2>Total number of athletes</h2>
+            <p>{{ totalNumberOfAthletes }}</p>
+        </div>
+    </div>
+    <ngx-charts-line-chart
+        [view]="view"
+        [results]="results"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [animations]="animations">
+    </ngx-charts-line-chart>
+</div>

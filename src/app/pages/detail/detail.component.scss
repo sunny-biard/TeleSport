@@ -1,0 +1,44 @@
+$blue: rgb(53, 124, 138);
+
+.detail {
+    margin: 0;
+    padding: 1rem;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    font-family: Verdana, sans-serif;
+}
+
+.detail-title {
+    font-size: 48px;
+    font-weight: 100;
+    color: white;
+    background-color: $blue;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.detail-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem;
+
+    h2 {
+        font-weight: 100;
+        color: grey;
+    }
+
+    p {
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+.detail-stats-element {
+    border: solid $blue;
+    border-radius: 20px;
+    padding: 0 20px;
+}
