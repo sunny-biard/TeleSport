@@ -58,6 +58,13 @@ export class DetailComponent implements OnInit, OnDestroy{
           return false;
         })
 
+        if (!this.countryDetails) {
+
+          this.router.navigate(["**"]);
+
+          throw (`Could not find country with ID : ${id}`);
+        }
+
         this.numberOfEntries = this.countryDetails.participations.length;
         this.totalNumberMedals = this.countryDetails.participations.reduce((sum, participation) => sum + participation.medalsCount, 0);
         this.totalNumberOfAthletes = this.countryDetails.participations.reduce((sum, participation) => sum + participation.athleteCount, 0);
