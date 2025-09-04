@@ -1,8 +1,31 @@
+$blue: rgb(53, 124, 138);
+
 .center {
-  width: 100vw;
-  height: 100vh;
+  padding: 200px 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+
+  h2 {
+    font-size: 48px;
+    font-weight: 100;
+    color: red;
+    background-color: $blue;
+    border-radius: 10px;
+    padding: 10px 20px;
+  }
+
+  a {
+    font-size: 20px;
+    font-weight: 100;
+    color: $blue;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    &:hover {
+      color: white;
+      background-color: $blue;
+    }
+  }
 }

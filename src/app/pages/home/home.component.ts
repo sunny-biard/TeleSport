@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, Subscription, catchError, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { FormattedData } from 'src/app/core/models/FormattedData';
 import { Olympic } from 'src/app/core/models/Olympic';
@@ -90,6 +90,16 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     const countrySelected = this.rawData.find((country) => country.country === event.name)
 
-    this.router.navigate(['/country', countrySelected?.id])
+    if (countrySelected) {
+      
+      this.router.navigate(['/country', countrySelected.id])
+    } else {
+
+      console.error("ERROR : Could not find country.");
+    }
   }
+
+  onResize(event: any) {
+    this.view = [event.target.innerWidth / 1.1, 400];
+}
 }

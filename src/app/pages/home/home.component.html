@@ -11,6 +11,7 @@
         </div>
     </div>
     <ngx-charts-pie-chart
+        (window:resize)="onResize($event)"
         [view]="view"
         [results]="results"
         [gradient]="gradient"

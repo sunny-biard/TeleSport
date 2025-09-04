@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { format } from 'd3';
-import { Observable, Subscription, count, of } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription, catchError, of } from 'rxjs';
 import { FormattedData, FormattedDetailedData } from 'src/app/core/models/FormattedData';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
@@ -35,7 +34,7 @@ export class DetailComponent implements OnInit, OnDestroy{
   totalNumberMedals!: number;
   totalNumberOfAthletes!: number;
 
-  constructor(private olympicService: OlympicService, private route: ActivatedRoute) {}
+  constructor(private olympicService: OlympicService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
 
@@ -93,5 +92,9 @@ export class DetailComponent implements OnInit, OnDestroy{
     })
 
     return formattedData;
+  }
+
+  onResize(event: any) {
+    this.view = [event.target.innerWidth / 1.5, 400];
   }
 }
