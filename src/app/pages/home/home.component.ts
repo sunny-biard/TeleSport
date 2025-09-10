@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   isDoughnut: boolean = false;
   trimLabels: boolean = false;
 
-  rawData!: Olympic[];
+  rawData: Olympic[] = [];
   numberOfCountries!: number;
   numberOfJOs!: number;
 
@@ -36,25 +36,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription = this.olympics$.subscribe((data) => {
       
       if (data) {
+
+        this.view = [innerWidth / 1.2, 400];
         
-        this.results = this.formatData(data);
         this.rawData = data;
-        this.numberOfCountries = data.length;
+        this.results = this.formatData(data);
+        this.numberOfCountries = this.getNumberOfCountries(data);
+        this.numberOfJOs = this.getNumberOfJOs(data);
+      } else {
 
-        let JOs: number[] = [];
-
-        data.forEach((country) => {
-
-          country.participations.forEach((participation) => {
-
-            if (!JOs.includes(participation.year)) {
-
-              JOs.push(participation.year);
-            }
-          })
-        })
-
-        this.numberOfJOs = JOs.length;
+        throw ("ERROR : Could not retrieve data.");
       }
     });
   }
@@ -86,13 +77,36 @@ export class HomeComponent implements OnInit, OnDestroy {
     return formattedData;
   }
 
+  getNumberOfCountries(countries: Olympic[]) {
+
+    return countries.length;
+  }
+
+  getNumberOfJOs(countries: Olympic[]) {
+
+    let JOs: number[] = [];
+
+    countries.forEach((country) => {
+
+      country.participations.forEach((participation) => {
+
+        if (!JOs.includes(participation.year)) {
+
+          JOs.push(participation.year);
+        }
+      })
+    })
+
+    return JOs.length;
+  }
+
   onSelect(event: FormattedData): void {
 
     const countrySelected = this.rawData.find((country) => country.country === event.name)
 
     if (countrySelected) {
       
-      this.router.navigate(['/country', countrySelected.id])
+      this.router.navigate(['/detail', countrySelected.id])
     } else {
 
       console.error("ERROR : Could not find country.");
@@ -100,6 +114,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onResize(event: any) {
-    this.view = [event.target.innerWidth / 1.1, 400];
+    this.view = [event.target.innerWidth / 1.2, 400];
 }
 }

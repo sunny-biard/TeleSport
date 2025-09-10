@@ -11,12 +11,13 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent implements OnInit, OnDestroy{
-  public olympics$: Observable<Olympic[]> = of([]);
 
   subscription!: Subscription;
 
-  view: [number, number] = [700, 400];
-  results!: FormattedDetailedData[];
+  id!: number;
+
+  view: [number, number] = [700, 250];
+  results: FormattedDetailedData[] = [];
   gradient: boolean = false;
   showXAxis: boolean = true;
   showYAxis: boolean = true;
@@ -27,8 +28,6 @@ export class DetailComponent implements OnInit, OnDestroy{
   showLegend: boolean = false;
   showLabels: boolean = true;
   animations: boolean = false;
-
-  countryDetails!: Olympic;
   
   numberOfEntries!: number;
   totalNumberMedals!: number;
@@ -38,38 +37,23 @@ export class DetailComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
 
-    const id = parseInt(this.route.snapshot.params['id']);
-    
-    this.olympics$ = this.olympicService.getOlympics();
+    this.id = parseInt(this.route.snapshot.params['id']);
 
-    this.subscription = this.olympics$.subscribe((data) => {
+    this.subscription = this.olympicService.getOlympicById(this.id).subscribe((data) => {
       
       if (data) {
 
-        data.some((country) => {
+          this.view = [innerWidth / 1.2, 250];
 
-          if (country.id === id) {
+          this.results = this.formatData(data);
+          this.numberOfEntries = this.getNumberOfEntries(data);
+          this.totalNumberMedals = this.getNumberOfMedals(data);
+          this.totalNumberOfAthletes = this.getNumberOfAthletes(data);
+      } else {
+        
+        this.router.navigate(["**"]);
 
-            this.countryDetails = country;
-
-            return true;
-          }
-
-          return false;
-        })
-
-        if (!this.countryDetails) {
-
-          this.router.navigate(["**"]);
-
-          throw (`Could not find country with ID : ${id}`);
-        }
-
-        this.numberOfEntries = this.countryDetails.participations.length;
-        this.totalNumberMedals = this.countryDetails.participations.reduce((sum, participation) => sum + participation.medalsCount, 0);
-        this.totalNumberOfAthletes = this.countryDetails.participations.reduce((sum, participation) => sum + participation.athleteCount, 0);
-
-        this.results = this.formatData(this.countryDetails);
+        console.error(`Could not find country with ID : ${this.id}`);
       }
     });
   }
@@ -99,6 +83,21 @@ export class DetailComponent implements OnInit, OnDestroy{
     })
 
     return formattedData;
+  }
+
+  getNumberOfEntries(country: Olympic) {
+
+    return country.participations.length;
+  }
+
+  getNumberOfMedals(country: Olympic) {
+    
+    return country.participations.reduce((sum, participation) => sum + participation.medalsCount, 0);
+  }
+
+  getNumberOfAthletes(country: Olympic) {
+    
+    return country.participations.reduce((sum, participation) => sum + participation.athleteCount, 0);
   }
 
   onResize(event: any) {

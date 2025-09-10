@@ -11,7 +11,7 @@ const routes: Routes = [
     component: HomeComponent,
   },
   { 
-    path: 'country/:id', 
+    path: 'detail/:id', 
     component: DetailComponent, 
   },
   {
