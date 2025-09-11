@@ -1,6 +1,6 @@
 # TeleSport
 
-This document describes the architecture of the TeleSport project, its main building blocks, and how to build it.
+This document describes the architecture of the TeleSport project, its main building blocks, and how to run it.
 
 # 📑 Table of Contents
 
