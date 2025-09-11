@@ -86,7 +86,9 @@ Contains TypeScript interfaces and types used across the app.
 
 Helps maintain strong typing and avoid any.
 
-Ensures consistent data structures when interacting with APIs or services.
+Ensures consistent data structures when interacting with services.
+
+Specific data structures are also required to generate charts with ngx-charts (pie and line charts).
 
 # 7. Development & Build Instructions
 
