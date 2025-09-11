@@ -1,4 +1,4 @@
-# TeleSport — Project Architecture
+# TeleSport
 
 This document describes the architecture of the TeleSport project, its main building blocks, and how to build it.
 
