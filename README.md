@@ -1,29 +1,107 @@
-# OlympicGamesStarter
+# TeleSport — Project Architecture
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+This document describes the architecture of the TeleSport project, its main building blocks, and how to build it.
 
-Don't forget to install your node_modules before starting (`npm install`).
+# 📑 Table of Contents
 
-## Development server
+1. Overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+2. Project Structure
 
-## Build
+3. Core Components
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+4. Routing
 
-## Where to start
+5. Services
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+6. Data Models
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+7. Development & Build Instructions
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+# 1. Overview
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+TeleSport is a front-end application built with Angular.
+The project follows a modular architecture, clearly separating:
 
-You're now ready to implement the requested features.
+UI (presentation)
 
-Good luck!
+Data handling
+
+Navigation & routing
+
+This ensures the app is maintainable, testable, and easy to evolve.
+
+# 2. Project Structure
+
+Here’s the high-level folder structure:
+
+- **/TeleSport/**
+  - `.vscode/` → VS Code project settings
+  - `src/`
+    - `app/`
+      - `pages/` → Page-level components (routes)
+      - `core/`
+        - `services/` → API communication & Data transformation
+        - `models/` → Data models & TypeScript interfaces
+      - `app-routing.module.ts`
+      - `app.module.ts`
+    - `assets/` → Static resources (images, icons, etc.)
+    - `environments/` → Environment-specific config
+  - `angular.json`
+  - `package.json`
+  - `tsconfig.json`
+  - … other config files
+
+# 3. Core Components
+
+Located in pages/.
+
+Contains page-level components representing application views.
+
+Each page is linked to a route.
+
+# 4. Routing
+
+Routing is defined in app-routing.module.ts.
+
+Each page component corresponds to at least one route.
+
+# 5. Services
+
+Located in core/services/.
+
+Implemented as Angular @Injectable services.
+
+Responsible for:
+
+API communication (HTTP requests)
+
+Data transformations
+
+# 6. Data Models
+
+Located in core/models/.
+
+Contains TypeScript interfaces and types used across the app.
+
+Helps maintain strong typing and avoid any.
+
+Ensures consistent data structures when interacting with APIs or services.
+
+# 7. Development & Build Instructions
+
+Install dependencies
+
+``npm install``
+
+Run dev server
+
+``ng serve``
+
+=> Application will be available at: http://localhost:4200/
+
+Build
+
+``ng build``
+
+=> Build output will be located in the dist/ directory.
