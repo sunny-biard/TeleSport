@@ -18,11 +18,8 @@ export class OlympicService {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error) => {
-
         console.error("ERROR : Could not retrieve data.", error);
-
         this.olympics$.next([]);
-
         throw error;
       })
     );

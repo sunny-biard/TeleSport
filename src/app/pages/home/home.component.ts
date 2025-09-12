@@ -34,24 +34,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.olympics$ = this.olympicService.getOlympics();
 
     this.subscription = this.olympics$.subscribe((data) => {
-      
       if (data) {
-
         this.view = [innerWidth / 1.2, 400];
-        
         this.rawData = data;
         this.results = this.formatData(data);
         this.numberOfCountries = this.getNumberOfCountries(data);
         this.numberOfJOs = this.getNumberOfJOs(data);
       } else {
-
         throw ("ERROR : Could not retrieve data.");
       }
     });
   }
 
   ngOnDestroy(): void {
-    
     this.subscription.unsubscribe();
   }
 
@@ -64,7 +59,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       let medals = 0;
 
       if (country.participations) {
-
         medals = country.participations.reduce((sum, participation) => sum + participation.medalsCount, 0);
       }
 
@@ -78,7 +72,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getNumberOfCountries(countries: Olympic[]) {
-
     return countries.length;
   }
 
@@ -91,7 +84,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       country.participations.forEach((participation) => {
 
         if (!JOs.includes(participation.year)) {
-
           JOs.push(participation.year);
         }
       })
@@ -105,10 +97,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     const countrySelected = this.rawData.find((country) => country.country === event.name)
 
     if (countrySelected) {
-      
       this.router.navigate(['/detail', countrySelected.id])
     } else {
-
       console.error("ERROR : Could not find country.");
     }
   }
