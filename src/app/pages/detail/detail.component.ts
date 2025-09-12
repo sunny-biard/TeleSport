@@ -42,24 +42,19 @@ export class DetailComponent implements OnInit, OnDestroy{
     this.subscription = this.olympicService.getOlympicById(this.id).subscribe((data) => {
       
       if (data) {
-
-          this.view = [innerWidth / 1.2, 250];
-
-          this.results = this.formatData(data);
-          this.numberOfEntries = this.getNumberOfEntries(data);
-          this.totalNumberMedals = this.getNumberOfMedals(data);
-          this.totalNumberOfAthletes = this.getNumberOfAthletes(data);
+        this.view = [innerWidth / 1.2, 250];
+        this.results = this.formatData(data);
+        this.numberOfEntries = this.getNumberOfEntries(data);
+        this.totalNumberMedals = this.getNumberOfMedals(data);
+        this.totalNumberOfAthletes = this.getNumberOfAthletes(data);
       } else {
-        
         this.router.navigate(["**"]);
-
         console.error(`Could not find country with ID : ${this.id}`);
       }
     });
   }
 
   ngOnDestroy(): void {
-      
     this.subscription.unsubscribe();
   }
 
@@ -86,17 +81,14 @@ export class DetailComponent implements OnInit, OnDestroy{
   }
 
   getNumberOfEntries(country: Olympic) {
-
     return country.participations.length;
   }
 
   getNumberOfMedals(country: Olympic) {
-    
     return country.participations.reduce((sum, participation) => sum + participation.medalsCount, 0);
   }
 
   getNumberOfAthletes(country: Olympic) {
-    
     return country.participations.reduce((sum, participation) => sum + participation.athleteCount, 0);
   }
 
